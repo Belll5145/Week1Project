@@ -52,6 +52,10 @@ public class Polygon {
   public String getShapeType(){
     return type;
   }
+  /**
+  * Prints the type of polygon and the number sides on one line,
+  * then the side length on the next line.
+  */
   public String toString(){
     return "Your shape is a "+ type + " and it has "+ numSides +" sides.\n It has a side length of "+ sideLength +" units.";
   }
