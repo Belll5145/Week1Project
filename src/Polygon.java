@@ -7,6 +7,8 @@ public class Polygon {
     private int numSides;
     private double sideLength;
     private String type;
+    private double perimeter;
+    private double area;
 
     // default constructor
     public Polygon(){
@@ -52,6 +54,38 @@ public class Polygon {
   public String getShapeType(){
     return type;
   }
+
+    /**
+     * Assigns the value of newLength to sideLength
+     * @param newLength
+     */
+  public void setLength(double newLength){
+      sideLength = newLength;
+  }
+
+    /**
+     * Assigns the value of newNumSides to numSides
+     * @param newNumSides
+     */
+  public void setNumSides(int newNumSides){
+      numSides = newNumSides;
+  }
+
+    /**
+     * Assigns the string in newName to type
+     * @param newName
+     */
+  public void setShapeName(String newName){
+      type = newName;
+  }
+
+    /**
+     * Calculates the perimeter of the polygon
+     */
+  public void calculatePerimeter(){
+       perimeter = sideLength*numSides;
+  }
+
   /**
   * Prints the type of polygon and the number sides on one line,
   * then the side length on the next line.
