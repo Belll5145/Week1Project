@@ -8,30 +8,36 @@ public class Polygon {
     private double sideLength;
     private String type;
     private double perimeter;
-    private double area;
+    private boolean valid;
+
 
     // default constructor
     public Polygon(){
-       numSides = 4;
+       numSides = 3;
        sideLength = 1.0;
-       type = "square";
+       type = "triangle";
+       valid = true;
+
     }
   /**
   * Creates a Polygon object with specified sides, side lengths,
-  * and shape type. If the number of sides is 0 or less, it is
-  * is set to 4. If the side lengths are 0 or less, it is set to
-  * 1.0.
+  * and shape type. If the number of sides is 2 or less, or the
+   * side length is 0.0 or less, than all values are set to the
+   * default values.
+  *
   */
     public Polygon(int sides, double length, String shape){
-      numSides = 4;
-      sideLength = 1.0;
+      numSides = sides;
+      sideLength = length;
       type = shape;
-      if(length > 0.0){
-        sideLength = length;
+      valid = true;
+      if(sideLength <= 0.0 || numSides <= 2){
+          numSides = 3;
+          sideLength = 1.0;
+          type = "triangle";
+          valid = false;
       }
-      if(sides > 0){
-        numSides = sides;
-      }
+
     }
     /**
     * 
@@ -56,15 +62,24 @@ public class Polygon {
   }
 
     /**
-     * Assigns the value of newLength to sideLength
+     * Assigns the value of newLength to sideLength. If the
+     * value of newLength is invalid, the value of sideLength
+     * is unchanged.
      * @param newLength
      */
-  public void setLength(double newLength){
-      sideLength = newLength;
+  public void setSideLength(double newLength){
+      if(newLength <= 0.0){
+          sideLength = sideLength;
+      }
+      else{
+          sideLength = newLength;
+      }
   }
 
     /**
-     * Assigns the value of newNumSides to numSides
+     * Assigns the value of newNumSides to numSides. If the
+     * value of newNumSides is invalid, the value of numSides
+     * is unchanged.
      * @param newNumSides
      */
   public void setNumSides(int newNumSides){
@@ -82,15 +97,28 @@ public class Polygon {
     /**
      * Calculates the perimeter of the polygon
      */
-  public void calculatePerimeter(){
+  public double calculatePerimeter(){
        perimeter = sideLength*numSides;
+       perimeter = Math.round(perimeter*1000)/1000;
+       return perimeter;
   }
+
+
 
   /**
   * Prints the type of polygon and the number sides on one line,
-  * then the side length on the next line.
+  * then the side length on the next line, and then the perimeter.
+   * If the polygon is invalid, it prints that it was set to the
+   * default values.
   */
   public String toString(){
-    return "Your shape is a "+ type + " and it has "+ numSides +" sides.\n It has a side length of "+ sideLength +" units.";
+      if(valid){
+          return "Your shape is a " + type + " and it has " + numSides + " sides.\n It has a side length of " + sideLength + " units.\n" +
+                  "It has a perimeter of " + perimeter + " units.";
+      }
+      else{
+          return "Not a valid polygon. Your polygon was given a default of 3 sides, was named 'triangle', and each side" +
+                  "has a length of 1.0 units";
+      }
   }
 }
