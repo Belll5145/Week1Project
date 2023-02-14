@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 /**
  * @file Polygon.java
  * @author Landon Bell
@@ -15,7 +16,7 @@ public class Polygon {
     public Polygon(){
        numSides = 3;
        sideLength = 1.0;
-       type = "triangle";
+       type = "Triangle";
        valid = true;
 
     }
@@ -27,15 +28,17 @@ public class Polygon {
   *
   */
     public Polygon(int sides, double length, String shape){
-      numSides = sides;
-      sideLength = length;
-      type = shape;
-      valid = true;
-      if(sideLength <= 0.0 || numSides <= 2){
+      if(length <= 0.0 || sides <= 2){
           numSides = 3;
           sideLength = 1.0;
-          type = "triangle";
+          type = "Triangle";
           valid = false;
+      }
+      else{
+          numSides = sides;
+        sideLength = length;
+        type = shape;
+        valid = true;
       }
 
     }
@@ -83,7 +86,13 @@ public class Polygon {
      * @param newNumSides
      */
   public void setNumSides(int newNumSides){
-      numSides = newNumSides;
+      if(newNumSides <= 2){
+          numSides = numSides;
+      }
+      else{
+          numSides = newNumSides;
+          valid = true;
+      }
   }
 
     /**
@@ -98,9 +107,9 @@ public class Polygon {
      * Calculates the perimeter of the polygon
      */
   public double calculatePerimeter(){
-       perimeter = sideLength*numSides;
-       perimeter = Math.round(perimeter*1000)/1000;
-       return perimeter;
+     perimeter = Math.round(sideLength*numSides*1000);
+      
+       return perimeter/1000;
   }
 
 
@@ -112,13 +121,14 @@ public class Polygon {
    * default values.
   */
   public String toString(){
+      DecimalFormat df = new DecimalFormat("#.###");
       if(valid){
-          return "Your shape is a " + type + " and it has " + numSides + " sides.\n It has a side length of " + sideLength + " units.\n" +
-                  "It has a perimeter of " + perimeter + " units.";
+          return "Your shape is a " + type + " and it has " + numSides + " sides.\nIt has a side length of " + sideLength + " units.\n" +
+                  "It has a perimeter of " + df.format(perimeter) + " units.";
       }
       else{
-          return "Not a valid polygon. Your polygon was given a default of 3 sides, was named 'triangle', and each side" +
-                  "has a length of 1.0 units";
+          return "Not a valid polygon. Your polygon was given a default of 3 sides, was named 'Triangle', and each side" +
+                  " has a length of 1.0 units.";
       }
   }
 }
